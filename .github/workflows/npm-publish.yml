@@ -24,6 +24,8 @@ jobs:
     - name: Production Build
       run: |
         npm run-script build
+      env: 
+        CI: ""
     - name: Deploy to S3
       uses: jakejarvis/s3-sync-action@master
       with:
