@@ -2,10 +2,6 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import FormLabel from '@material-ui/core/FormLabel';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import Paper from '@material-ui/core/Paper';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
@@ -20,7 +16,6 @@ import CallIcon from '@material-ui/icons/Call';
 import clsx from 'clsx';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Collapse from '@material-ui/core/Collapse';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,9 +57,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
-
 export default function SpacingGrid() {
   const [spacing, setSpacing] = React.useState(10);
   const [callDescription, setCallDescription] = React.useState("");
@@ -78,30 +70,7 @@ export default function SpacingGrid() {
     setExpanded(!expanded);
   };
 
-
-  
   const handleCall = () => {
-    /*1	Debt collection	0
-  2	Credit reporting, credit repair services, or o...	1
-  18	Money transfer, virtual currency, or money ser...	2
-  23	Mortgage	3
-  32	Student loan	4
-  payload: ['I have been studying for 4 years now and planning to do my phd. I would like to borrow some more money to complete my college.']np
-  i'm building a home and i would like to adjust my floating rate
-  45	Vehicle loan or lease	5
-  90	Credit card or prepaid card	6
-  157	Checking or savings account	7
-  255	Credit card	8
-  354	Payday loan, title loan, or personal loan	9
-  962	Consumer Loan	10
-  4123	Payday loan	11
-  56641	Credit reporting	12
-  78732	Bank account or service	13
-  85832	Other financial service	14
-  90583	Prepaid card	15
-  153531	Money transfers	16
-  597144	Virtual currency	17*/
-  
      // alert(callDescription);
      const proxyurl = "https://cors-anywhere.herokuapp.com/";
      const url = "https://3l7l8fowrf.execute-api.us-east-1.amazonaws.com/test"
@@ -124,7 +93,6 @@ export default function SpacingGrid() {
           setCallResponse(data);
           //translateLabel(data);
           console.log(data[0].label[0]);
-
 
           if(data[0].label[0]==='__label__4') {
             setLabelDescription("Student Loan");
@@ -164,7 +132,7 @@ export default function SpacingGrid() {
         <Grid container justify="center" spacing={spacing}>
           <Grid key="4" item>
             <Card className={classes.card}>
-                <CardHeader
+                <CardHeader 
                     avatar={
                         <Avatar aria-label="recipe" className={classes.avatar}>
                             <AcUnitIcon/>
@@ -268,10 +236,36 @@ export default function SpacingGrid() {
                     <Typography variant="h4" color="textSecondary" component="p">
                        {labelDescription} 
                     </Typography>
-                    <Typography variant="h4" color="textSecondary" component="p">
-                       Department
+                    <Typography variant="h6" color="textSecondary" component="p">
+                       Department 
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                       Have a good rest of the day.
                     </Typography>
                 </CardContent>
+                <CardActions disableSpacing>
+                    <IconButton aria-label="Call for help"
+                    onClick={handleCall} 
+                    >
+                      <CallIcon />
+                    </IconButton>
+
+                    <IconButton
+                    className={clsx(classes.expand, {
+                        [classes.expandOpen]: expanded,
+                        })}
+                    onClick={handleExpandClick}
+                    aria-expanded={expanded}
+                    aria-label="show more"
+                    >
+                      <ExpandMoreIcon color="primary" />
+                    </IconButton>
+                </CardActions>
+                <Collapse in={expanded} timeout="auto" unmountOnExit>
+                <CardContent>
+                  <Typography variant="body2" align="left">We are here to help</Typography>
+                </CardContent>
+              </Collapse>
 
             </Card>
           </Grid>
