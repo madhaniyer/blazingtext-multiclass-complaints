@@ -14,6 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import CardContent from '@material-ui/core/CardContent';
 import CallIcon from '@material-ui/icons/Call';
 import clsx from 'clsx';
+import Box from '@material-ui/core/Box';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Collapse from '@material-ui/core/Collapse';
 
@@ -60,7 +61,8 @@ const useStyles = makeStyles((theme) => ({
 export default function SpacingGrid() {
   const [spacing, setSpacing] = React.useState(10);
   const [callDescription, setCallDescription] = React.useState("");
-  const [labelDescription, setLabelDescription] = React.useState("*********");
+  const [labelDescription, setLabelDescription] = React.useState("*****");
+  const [confidence, setConfidence] = React.useState();
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [callResponse, setCallResponse] = React.useState([{}]);
@@ -93,7 +95,9 @@ export default function SpacingGrid() {
           setCallResponse(data);
           //translateLabel(data);
           console.log(data[0].label[0]);
-
+          console.log("Response Confidence"+data[0].prob[0]);
+          console.log(data);
+          setConfidence(parseFloat((data[0].prob[0]*100)).toFixed(2))
           if(data[0].label[0]==='__label__4') {
             setLabelDescription("Student Loan");
           } else if (data[0].label[0]==='__label__0') {
@@ -231,42 +235,22 @@ export default function SpacingGrid() {
 
                 <CardContent>
                     <Typography variant="h6" color="textSecondary" component="p">
-                        I will be putting you through to 
+                        I will be putting you through to the
                     </Typography>
-                    <Typography variant="h4" color="textSecondary" component="p">
+                    <Typography variant="h5" color="textSecondary" component="p">
+                      <Box lineHeight={2} m={1}>
                        {labelDescription} 
+                      </Box>
                     </Typography>
                     <Typography variant="h6" color="textSecondary" component="p">
                        Department 
                     </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                       Have a good rest of the day.
+                    <Typography variant="h6" color="textSecondary" component="p">
+                      <Box lineHeight={2.7} m={1}>
+                       Confidence Level : {confidence}%
+                      </Box>
                     </Typography>
                 </CardContent>
-                <CardActions disableSpacing>
-                    <IconButton aria-label="Call for help"
-                    onClick={handleCall} 
-                    >
-                      <CallIcon />
-                    </IconButton>
-
-                    <IconButton
-                    className={clsx(classes.expand, {
-                        [classes.expandOpen]: expanded,
-                        })}
-                    onClick={handleExpandClick}
-                    aria-expanded={expanded}
-                    aria-label="show more"
-                    >
-                      <ExpandMoreIcon color="primary" />
-                    </IconButton>
-                </CardActions>
-                <Collapse in={expanded} timeout="auto" unmountOnExit>
-                <CardContent>
-                  <Typography variant="body2" align="left">We are here to help</Typography>
-                </CardContent>
-              </Collapse>
-
             </Card>
           </Grid>
 
