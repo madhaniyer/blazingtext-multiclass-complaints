@@ -229,7 +229,7 @@ export default function SpacingGrid() {
                 />
                 <CardMedia
                 className={classes.media}
-                image="./images/doc.png"
+                image="./images/Call-Center.png"
                 title="Paella dish"
                 />
 
